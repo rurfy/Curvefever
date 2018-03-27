@@ -6,4 +6,5 @@ public class Var {
 	static boolean links1 = false, rechts1 = false;
 	static int hoch = 0, runter = 0, links = -maxWert, rechts = 0;
 	static int hochMax = -maxWert, runterMax = maxWert, linksMax = -maxWert, rechtsMax = maxWert;
+	static boolean count = true;
 }
