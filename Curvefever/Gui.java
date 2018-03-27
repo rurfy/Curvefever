@@ -18,9 +18,9 @@ public class Gui {
 
 		
 		Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-		int width = screensize.width-left-right;
-		int height = screensize.height-top-bottom;
-		feld.setSize(width, height);
+		Var.width = screensize.width-left-right;
+		Var.height = screensize.height-top-bottom;
+		feld.setSize(Var.width, Var.height);
 		
 		feld.setLocationRelativeTo(null);
 		feld.setLayout(null);
@@ -29,7 +29,7 @@ public class Gui {
 		feld.addKeyListener(new KeyHandler());
 		feld.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Layout.lay1 = new Layout();
-		Layout.lay1.setBounds(0, 0, width, height);
+		Layout.lay1.setBounds(0, 0, Var.width, Var.height);
 		Layout.lay1.setVisible(true);
 		
 		feld.add(Layout.lay1);

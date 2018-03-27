@@ -6,20 +6,20 @@ public class KeyHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-			Bewegung.links1=true;
+			Var.links1=true;
 		}
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			Bewegung.rechts1=true;
+			Var.rechts1=true;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-			Bewegung.links1=false;
+			Var.links1=false;
 		}
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			Bewegung.rechts1=false;
+			Var.rechts1=false;
 		}
 
 	}

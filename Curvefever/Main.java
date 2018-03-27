@@ -6,6 +6,7 @@ public class Main {
 		new Layout();
 		new KeyHandler();
 		new Bewegung();
+		new Var();
 	}
 
 }
