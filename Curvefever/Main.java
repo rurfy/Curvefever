@@ -9,7 +9,6 @@ public class Main {
 		new Bewegung();
 		new Var();
 		new Kollision();
-		new Node();
 	}
 
 }

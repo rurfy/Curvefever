@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class Gui {
-	
+	static JFrame feld;
 	public Gui() {
 		JFrame feld = new JFrame();
 		GraphicsConfiguration config = feld.getGraphicsConfiguration();
