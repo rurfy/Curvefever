@@ -7,6 +7,7 @@ public class Main {
 		new KeyHandler();
 		new Bewegung();
 		new Var();
+		new Kollision();
 	}
 
 }
