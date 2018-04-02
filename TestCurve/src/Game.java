@@ -20,8 +20,8 @@ public class Game extends JPanel {
 	}
 
 	public void initDraw() { // beim Initialisieren Hintergrund festlegen
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(0, 0, Var.width, Var.height);
+		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.fillRect(0, 0, Var.width - Var.scoreBoardWidth, Var.height);
 	}
 
 	public void playGame() { // Das gesamte Game
