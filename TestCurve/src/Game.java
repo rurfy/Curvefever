@@ -11,16 +11,15 @@ public class Game extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage img; // Image erstellen
 	private Graphics2D g2d; // Graphics2D Okjekt erstellen
-	Pos position;
+	ScorePlayer position = new ScorePlayer();
 
-	public Game(Pos position) { // Constructor konfigurieren
+	public Game() { // Constructor konfigurieren
 		img = new BufferedImage(Var.width, Var.height, BufferedImage.TYPE_INT_RGB); // Image auf Framegröße mit dem RGB Typ definieren
 		g2d = (Graphics2D) img.getGraphics(); // Graphics2D das Image übergeben
-		this.position = position; // position Objekt and die Game Klasse übergeben
 	}
 
 	public void initDraw() { // beim Initialisieren Hintergrund festlegen
-		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.setColor(Var.hintergrund);
 		g2d.fillRect(0, 0, Var.width - Var.scoreBoardWidth, Var.height);
 	}
 
@@ -34,15 +33,9 @@ public class Game extends JPanel {
 		g.drawImage(img, 0, 0, null);
 	}
 
-	public void kollision() { // Kollision prüfen
-
-		int farbeLinks = img.getRGB(position.linksX, position.linksY); // Farbe am linken Punkt ermitteln
-		int farbeMitte = img.getRGB(position.mitteX, position.mitteY); // Farbe am mittleren Punkt ermitteln
-		int farbeRechts = img.getRGB(position.rechtsX, position.rechtsY); // Farbe am rechten Punkt ermitteln
-		if (farbeLinks != new Color(255, 255, 255).getRGB() || farbeMitte != new Color(255, 255, 255).getRGB()
-				|| farbeRechts != new Color(255, 255, 255).getRGB()) { // Überprüfen ob einer der Punkte NICHT WHITE ist
-			System.out.println("Kollision!"); // Testausgabe
-		}
+	public void drawCircle(Color color) {
+		g2d.setColor(Color.RED); // Color wird nur zur Sicherheit immer auf RED gesetzt
+		g2d.fillOval(Var.player1x, Var.player1y, Var.ballSize, Var.ballSize); // Pixel bei den Player1 Koordinaten rot färben
 	}
 
 	public void gameUpdate() { // updaten durch Timer
@@ -52,54 +45,25 @@ public class Game extends JPanel {
 
 			@Override
 			public void run() {
-				// Der boolean Count dient nur für die Verlangsamung
-				// if (Var.count) {
-				if (Var.links1) { // für Linke Taste gedrückt
-					if (Var.hoch >= -Var.maxWert && Var.links > -Var.maxWert && Var.rechts == 0 && Var.runter == 0) { // Links Oben
-						Var.hoch++;
-						Var.links--;
-					} else if (Var.hoch == 0 && Var.links >= -Var.maxWert && Var.rechts == 0 && Var.runter < Var.maxWert) { // Links Unten
-						Var.runter++;
-						Var.links++;
-					} else if (Var.hoch == 0 && Var.links == 0 && Var.rechts < Var.maxWert && Var.runter <= Var.maxWert) { // Rechts Unten
-						Var.runter--;
-						Var.rechts++;
-					} else if (Var.hoch > -Var.maxWert && Var.links == 0 && Var.rechts <= Var.maxWert && Var.runter == 0) { // Rechts Oben
-						Var.hoch--;
-						Var.rechts--;
-					}
-				}
-				if (Var.rechts1) { // für Rechte Taste gedrückt
-					if (Var.hoch > -Var.maxWert && Var.links >= -Var.maxWert && Var.rechts == 0 && Var.runter == 0) { // Links Oben
-						Var.hoch--;
-						Var.links++;
-					} else if (Var.hoch == 0 && Var.links > -Var.maxWert && Var.rechts == 0 && Var.runter <= Var.maxWert) { // Links Unten
-						Var.runter--;
-						Var.links--;
-					} else if (Var.hoch == 0 && Var.links == 0 && Var.rechts <= Var.maxWert && Var.runter < Var.maxWert) { // Rechts Unten
-						Var.runter++;
-						Var.rechts--;
-					} else if (Var.hoch >= -Var.maxWert && Var.links == 0 && Var.rechts < Var.maxWert && Var.runter == 0) { // Rechts Oben
-						Var.hoch++;
-						Var.rechts++;
-					}
 
+				if (Var.links1) {
+					position.rotateLeft(); // Siehe ScorePlayer.java
 				}
-				Var.player1x += (Var.links + Var.rechts)/* / 4 */; // zum Verlangsamen
-				Var.player1y += (Var.hoch + Var.runter)/* / 4 */;
 
-				kollision();
-				g2d.setColor(Color.RED); // Color wird nur zur Sicherheit immer auf RED gesetzt
-				g2d.fillOval(Var.player1x, Var.player1y, Var.ballSize, Var.ballSize); // Pixel bei den Player1 Koordinaten rot färben
+				else if (Var.rechts1) {
+					position.rotateRight(); // Siehe ScorePlayer.java
+				} else {
+					position.moveStrait(); // Siehe ScorePlayer.java
+				}
+
+				Var.player1x += position.x / Var.slowDown;
+				Var.player1y += position.y / Var.slowDown;
+
+				position.kollision(img); // Siehe ScorePlayer.java
+				drawCircle(Color.RED); // In DrawCirlce ausgelagert in Vorarbeit für den Multiplayer
 				repaint();
-				// Var.count = false;
-				// } else {
-				// Var.count = true;
-				// }
-				// Line.draw();
-
 			}
 
-		}, 0, 30);
+		}, 0, 30); // Zeitabstand zwischen den Runs
 	}
 }

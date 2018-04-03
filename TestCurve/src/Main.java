@@ -13,6 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+
 		JFrame feld = new JFrame(); // Frame erstellen
 
 		GraphicsConfiguration config = feld.getGraphicsConfiguration(); // Framegröße einstellen
@@ -25,6 +26,7 @@ public class Main {
 		Var.height = screensize.height - top - bottom;
 		feld.setSize(Var.width, Var.height);
 
+		System.out.println(505 + (int) (5 * Math.cos(Math.toRadians(0))));
 		feld.setTitle("Curvefever"); // restliche Definitionen für das Frame
 		feld.addKeyListener(new KeyHandler());
 		feld.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,15 +60,7 @@ public class Main {
 		// wieder auf screenHeight addieren
 		// feld.add(chat, gbc);
 
-		Pos position = new Pos(); // Okjektinstanz position erstellen und mit Startpunkt initialisieren
-		position.linksX = Var.player1x + 5;
-		position.linksY = Var.player1y + 10;
-		position.mitteX = Var.player1x;
-		position.mitteY = Var.player1y + 5;
-		position.rechtsX = Var.player1x + 5;
-		position.rechtsY = Var.player1y;
-
-		Game game = new Game(position); // Gameinstanz erstellen
+		Game game = new Game(); // Gameinstanz erstellen
 		gbc.gridy = 0;
 		gbc.gridx = 1; // x ist höher damit es rechts von dem ScoreBoard ist
 		game.setPreferredSize(new Dimension(Var.width - Var.scoreBoardWidth, Var.height)); // Size ist FrameSize ScoreBoardSize
