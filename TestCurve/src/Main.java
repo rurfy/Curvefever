@@ -26,9 +26,7 @@ public class Main {
 		Var.height = screensize.height - top - bottom;
 		feld.setSize(Var.width, Var.height);
 
-		System.out.println(505 + (int) (5 * Math.cos(Math.toRadians(0))));
 		feld.setTitle("Curvefever"); // restliche Definitionen für das Frame
-		feld.addKeyListener(new KeyHandler());
 		feld.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		feld.setLocationRelativeTo(null);
 
@@ -40,15 +38,25 @@ public class Main {
 		scoreBoard.setBackground(Color.BLUE); // TestBackground für den Kontrast
 		scoreBoard.setPreferredSize(new Dimension(Var.scoreBoardWidth, Var.height)); // scoreBoardWidth einfach willkürlich gewählt
 
-		ScorePlayer player1 = new ScorePlayer(); // Testweise 2 Spieler adden
-		ScorePlayer player2 = new ScorePlayer();
+		ScorePlayer player1 = new ScorePlayer("Player1"); // Testweise 2 Spieler adden
+		ScorePlayer player2 = new ScorePlayer("Player2");
+
+		player1.color = Color.RED;
+		player2.color = Color.BLUE;
+		player1.playerX = 500;
+		player1.playerY = 500;
+		player2.playerX = 1000;
+		player2.playerY = 1000;
+		player1.winkel = 45;
+		player2.winkel = -135;
+
 		player2.setBackground(Color.GREEN); // TestBackground für den Kontrast
 		scoreBoard.add(player1); // Spieler aufs ScoreBoard adden
 		scoreBoard.add(player2);
 
 		gbc.gridx = 0; // 1. Position horizontal
 		gbc.gridy = 0; // beide auf gleicher vertikaler Höhe
-		gbc.gridwidth = gbc.gridheight = 1;
+		// gbc.gridwidth = gbc.gridheight = 1;
 		feld.add(scoreBoard, gbc); // ScoreBoard dem Frame hinzufügen
 
 		// Erster Versuch einen Chat einzubauen... bis zum Ende nicht weitermachen!!!
@@ -60,7 +68,8 @@ public class Main {
 		// wieder auf screenHeight addieren
 		// feld.add(chat, gbc);
 
-		Game game = new Game(); // Gameinstanz erstellen
+		Game game = new Game(player1, player2); // Gameinstanz erstellen
+		feld.addKeyListener(new KeyHandler(player1, player2));
 		gbc.gridy = 0;
 		gbc.gridx = 1; // x ist höher damit es rechts von dem ScoreBoard ist
 		game.setPreferredSize(new Dimension(Var.width - Var.scoreBoardWidth, Var.height)); // Size ist FrameSize ScoreBoardSize
