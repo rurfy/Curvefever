@@ -26,6 +26,15 @@ public class Main {
 		Var.height = screensize.height - top - bottom;
 		feld.setSize(Var.width, Var.height);
 
+		feld.setResizable(false);
+		feld.setState(JFrame.MAXIMIZED_BOTH);
+		Dimension size = feld.getSize();
+		Var.height = size.height;
+		Var.width = size.width;
+
+		feld.setUndecorated(true);
+		feld.setVisible(true);
+
 		feld.setTitle("Curvefever"); // restliche Definitionen für das Frame
 		feld.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		feld.setLocationRelativeTo(null);
@@ -43,10 +52,10 @@ public class Main {
 
 		player1.color = Color.RED;
 		player2.color = Color.BLUE;
-		player1.playerX = 500;
-		player1.playerY = 500;
-		player2.playerX = 1000;
-		player2.playerY = 1000;
+		player1.playerX = Var.width / 3;
+		player1.playerY = Var.height / 3;
+		player2.playerX = (Var.width / 3) * 2;
+		player2.playerY = (Var.height / 3) * 2;
 		player1.winkel = 45;
 		player2.winkel = -135;
 

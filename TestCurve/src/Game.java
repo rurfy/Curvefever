@@ -39,8 +39,13 @@ public class Game extends JPanel {
 		g.drawImage(img, 0, 0, null);
 	}
 
-	public void drawCircle(Color color, ScorePlayer player) {
-		g2d.setColor(color); // Color wird nur zur Sicherheit immer auf RED gesetzt
+	public void drawCircle(ScorePlayer player) {
+		g2d.setColor(player.color); // Color wird nur zur Sicherheit immer auf RED gesetzt
+		g2d.fillOval(player.playerX, player.playerY, player.ballSize, player.ballSize); // Pixel bei den Player1 Koordinaten rot färben
+	}
+
+	public void removeLastCircle(ScorePlayer player) {
+		g2d.setColor(Var.hintergrund); // Color wird nur zur Sicherheit immer auf RED gesetzt
 		g2d.fillOval(player.playerX, player.playerY, player.ballSize, player.ballSize); // Pixel bei den Player1 Koordinaten rot färben
 	}
 
@@ -67,6 +72,9 @@ public class Game extends JPanel {
 
 	public void move(ScorePlayer player) {
 		if (player.alive) {
+			if (player.createLineGap()) {
+				removeLastCircle(player);
+			}
 			if (player.left) {
 				player.rotateLeft(); // Siehe ScorePlayer.java
 			}
@@ -81,15 +89,15 @@ public class Game extends JPanel {
 			player.playerY += player.y / Var.slowDown;
 
 			player.kollision(img); // Siehe ScorePlayer.java
-			drawCircle(player.color, player); // In DrawCirlce ausgelagert in Vorarbeit für den Multiplayer
+			drawCircle(player); // In DrawCirlce ausgelagert in Vorarbeit für den Multiplayer
 		}
 	}
 
 	public void resetBoard() {
-		player1.playerX = 500;
-		player1.playerY = 500;
-		player2.playerX = 1000;
-		player2.playerY = 1000;
+		player1.playerX = Var.width / 3;
+		player1.playerY = Var.height / 3;
+		player2.playerX = (Var.width / 3) * 2;
+		player2.playerY = (Var.height / 3) * 2;
 		player1.winkel = 45;
 		player2.winkel = -135;
 		player1.alive = true;

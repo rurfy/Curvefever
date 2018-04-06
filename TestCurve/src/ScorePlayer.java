@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
+import java.util.Random;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,6 +25,9 @@ public class ScorePlayer extends JPanel { // Panel und Daten für jeden Spieler i
 	Color color;
 	boolean left, right;
 	boolean alive;
+	Random gap = new Random();
+	int gapProbability;
+	int gapLength;
 
 	JLabel player = new JLabel(); // Label für Spielernamen
 	JLabel score = new JLabel(); // Label für Spielerpunktzahl
@@ -40,6 +45,7 @@ public class ScorePlayer extends JPanel { // Panel und Daten für jeden Spieler i
 		radius = 10;
 		ballSize = 10;
 		alive = true;
+		gapProbability = 1000;
 
 		player.setFont(new Font("Arial", 0, 32)); // Größere Schrift
 		score.setFont(new Font("Arial", 0, 32)); // Größere Schrift
@@ -97,6 +103,31 @@ public class ScorePlayer extends JPanel { // Panel und Daten für jeden Spieler i
 				score.setText(Integer.toString(spielStand));
 				alive = false;
 			}
+		}
+	}
+
+	public boolean createLineGap() {
+		int n = gap.nextInt(gapProbability) + 1;
+		if (isGap(gapLength)) {
+			return true;
+		}
+		else if (n <= 10) {
+			gapProbability = 1000;
+			gapLength = gap.nextInt(10)+1;
+			return true;
+		} else {
+			gapProbability--;
+			return false;
+		}
+	}
+	
+	public boolean isGap(int gapLength) {
+		if (gapLength > 0) {
+			this.gapLength--;
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
